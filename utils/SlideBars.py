@@ -25,7 +25,7 @@
 import pybullet as p
 import numpy as np
 import torch
-from TD3.core import combined_shape
+# from TD3.core import combined_shape
 
 class SlideBars():
     def __init__(self, Id):
