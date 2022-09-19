@@ -365,17 +365,19 @@ class RLCamReachEnv(gym.Env):
         # if terminated:
         #     reward = -50.0
         #     self.terminated = True
+        self.is_success = False
 
         # 如果机械臂一直无所事事，在最大步数还不能接触到物体，也需要给一定的惩罚
         if self.step_counter > self.max_steps_one_episode:
-            reward = -self.distance*10
+            reward = -self.distance * 10
             self.terminated = True
 
-        elif self.distance < 0.01:
-            reward = 0 # 10.0
+        elif self.distance < opt.reach_dis:
+            reward = 0  # 10.0
             self.terminated = True
+            self.is_success = True
         else:
-            reward = -self.distance*10 # -0.1
+            reward = -self.distance * 10  # -0.1
             self.terminated = False
 
         info = {'distance:', self.distance}
@@ -393,7 +395,7 @@ class RLCamReachEnv(gym.Env):
         goal = [random.uniform(self.x_low_obs,self.x_high_obs),
                 random.uniform(self.y_low_obs,self.y_high_obs),
                 random.uniform(self.z_low_obs, self.z_high_obs)]
-        return self.processed_image, reward, self.terminated
+        return self.processed_image, reward, self.terminated, self.is_success
 
     def close(self):
         p.disconnect()
@@ -414,16 +416,16 @@ class CustomSkipFrame(gym.Wrapper):
     def step(self, action):
         total_reward = 0
         states = []
-        state, reward, done = self.env.step(action)
+        state, reward, done, is_success = self.env.step(action)
         for i in range(self.skip):
             if not done:
-                state, reward, done = self.env.step(action)
+                state, reward, done, is_success = self.env.step(action)
                 total_reward += reward
                 states.append(state)
             else:
                 states.append(state)
         states = np.concatenate(states, axis=0)[None, :, :, :]
-        return states.astype(np.float32), reward, done
+        return states.astype(np.float32), reward, done, is_success
 
     def reset(self):
         state = self.env.reset()
