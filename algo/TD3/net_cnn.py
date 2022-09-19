@@ -29,7 +29,7 @@ import torch.nn as nn
 class PolicyNet_CNN(torch.nn.Module):
     def __init__(self, state_dim, action_dim, max_action):
         super(PolicyNet_CNN, self).__init__()
-        self.l1 = nn.Conv2d(in_channels=state_dim, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        self.l1 = nn.Conv2d(in_channels=state_dim[0], out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l2 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l4 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
@@ -54,7 +54,7 @@ class QValueNet_CNN(torch.nn.Module):
     def __init__(self, state_dim, action_dim):
         super(QValueNet_CNN, self).__init__()
         # Q1 architecture
-        self.l1 = nn.Conv2d(in_channels=state_dim, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        self.l1 = nn.Conv2d(in_channels=state_dim[0], out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l2 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l4 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
@@ -63,7 +63,7 @@ class QValueNet_CNN(torch.nn.Module):
         self.fc_out1 = nn.Linear(in_features=512, out_features=1, bias=True)
 
         # Q2 architecture
-        self.l5 = nn.Conv2d(in_channels=state_dim, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        self.l5 = nn.Conv2d(in_channels=state_dim[0], out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l6 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l7 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
         self.l8 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
