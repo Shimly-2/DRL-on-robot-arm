@@ -392,8 +392,7 @@ def train_reach_with_TD3_CNN(**kwargs):
     torch.manual_seed(opt.random_seed)
     # env = WorldEnv()
     replay_buffer = ReplayBuffer_Trajectory_reach_CNN(opt.buffer_size)
-    agent = TD3_CNN(state_dim, action_dim, action_bound, opt.hidden_dim, opt.actor_lr,
-                 opt.critic_lr, opt.sigma, opt.tau, opt.gamma, opt.policy_noise, opt.noise_clip, opt.policy_freq, opt.device)
+    agent = TD3_CNN(state_dim, action_dim, action_bound)
 
     return_list = []
     max_rate = 0
@@ -654,3 +653,4 @@ if __name__=='__main__':
     import fire
     fire.Fire()
     # train_reach_with_TD3_CNN()
+    # run()
